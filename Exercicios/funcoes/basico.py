@@ -36,7 +36,12 @@ def resumo_juros_basico(capital_inicial: float, taxa_juros: float, anos: int):
 def metricas_cilindro(raio: float, altura: float):
     volume = math.pi * (raio ** 2) * altura
     area_superficie = 2 * math.pi * raio * (raio + altura)
-    return f"Um cilindro com raio {raio} e altura {altura} tem um volume de {volume:.2f} e uma área de superfície de {area_superficie:.2f}."      
+    return f"Um cilindro com raio {raio} e altura {altura} tem um volume de {volume:.2f} e uma área de superfície de {area_superficie:.2f}."    
+
+# Exercicio 10
+def calcular_distancia(x1, y1, x2, y2): 
+    distancia = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+    return f"A distância entre os pontos ({x1}, {y1}) e ({x2}, {y2}) é {distancia:.2f}."
     
 
 if __name__ == '__main__':
