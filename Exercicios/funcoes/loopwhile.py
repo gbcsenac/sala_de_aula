@@ -1,4 +1,5 @@
-def dobrar(numeros:[]):
+#Exercícios de Listas e Laços de Repetição
+def dobrar(numeros):
     for i in range(len(numeros)):
         numeros[i] = numeros[i] * 2
         print(numeros[i])
@@ -202,7 +203,7 @@ def mover_zeros_para_o_final(numeros: list):
 if __name__ == '__main__':
     print("Exercicios_listas_lacos ======================================\n\n")
 
-    print(filtrar_pares([1, 2, 3, 4, 5, 6]))
+    
 
     print(contar_negativos([10, -3, 0, -5, 8, -1]))
 
