@@ -126,28 +126,32 @@ class AvisadorPorWhatsApp:
             f"{emprestimo.data_prevista:%d/%m/%Y}. Passe na locadora para devolver."
         )
 
-
+        
 class CobradorDeAtrasos:
     total_avisados: int
 
-    def __init__(self):
+    def __init__(self, repositorio, avisador, relogio):
+        self.repositorio = repositorio
+        self.avisador = avisador
+        self.relogio = relogio
         self.total_avisados = 0
 
     def cobrar(self) -> None:
-        repositorio = RepositorioDeEmprestimos()
-        avisador = AvisadorPorWhatsApp()
-        hoje = date.today()
+        hoje = self.relogio.hoje()
 
-        # Mensagem de cobrança no sábado irrita o cliente: o balcão decidiu
-        # que aviso só sai em dia útil.
-        if hoje.weekday() >= 5:  # 5 é sábado, 6 é domingo
+        if hoje.weekday() >= 5:
             return
 
-        for emprestimo in repositorio.abertos():
+        for emprestimo in self.repositorio.abertos():
             if emprestimo.atrasado_em(hoje):
+                try:
+                    self.avisador.avisa(emprestimo)
+
+                except ConnectionError:
+                    continue
+
                 emprestimo.registrar_aviso(hoje)
-                repositorio.atualiza(emprestimo)
-                avisador.avisa(emprestimo)
+                self.repositorio.atualiza(emprestimo)
                 self.total_avisados += 1
 
 
@@ -155,3 +159,21 @@ if __name__ == "__main__":
     cobrador = CobradorDeAtrasos()
     cobrador.cobrar()
     print(f"{cobrador.total_avisados} cliente(s) avisado(s).")
+
+# GREEN: 1 teste passou.
+# Aprendizado:
+# O CobradorDeAtrasos agora recebe repositório,
+# avisador e relógio pelo construtor.
+# Os objetos Mock simulam as dependências externas,
+# permitindo testar a cobrança sem acessar o banco
+# ou enviar mensagens reais.
+
+# PARTE A — LOCAÇÃO / MOCK OBJECTS
+# Resultado: 5 testes PASSARAM.
+# Aprendizado:
+# - Injeção de dependências.
+# - Uso de Mock e side_effect.
+# - Tratamento de ConnectionError.
+# - Testes de atraso, prazo e fim de semana.
+# - Cobrança só é contabilizada após envio bem-sucedido.
+# Próximo passo: iniciar a Parte B — regra do minimundo.
