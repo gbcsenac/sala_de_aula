@@ -159,21 +159,3 @@ if __name__ == "__main__":
     cobrador = CobradorDeAtrasos()
     cobrador.cobrar()
     print(f"{cobrador.total_avisados} cliente(s) avisado(s).")
-
-# GREEN: 1 teste passou.
-# Aprendizado:
-# O CobradorDeAtrasos agora recebe repositório,
-# avisador e relógio pelo construtor.
-# Os objetos Mock simulam as dependências externas,
-# permitindo testar a cobrança sem acessar o banco
-# ou enviar mensagens reais.
-
-# PARTE A — LOCAÇÃO / MOCK OBJECTS
-# Resultado: 5 testes PASSARAM.
-# Aprendizado:
-# - Injeção de dependências.
-# - Uso de Mock e side_effect.
-# - Tratamento de ConnectionError.
-# - Testes de atraso, prazo e fim de semana.
-# - Cobrança só é contabilizada após envio bem-sucedido.
-# Próximo passo: iniciar a Parte B — regra do minimundo.

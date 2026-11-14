@@ -1,7 +1,4 @@
-
 from UC2.conexao import conectar
-
-
 class Cliente:
 
     def __init__(self, nome, telefone, email=None, tipo=None, id_cliente=None):

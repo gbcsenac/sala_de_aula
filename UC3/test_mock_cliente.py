@@ -95,13 +95,3 @@ def test_excluir_cliente():
 
     assert resultado is True
 
-
-# Regra: Cliente cadastrado utilizando o CRUD.
-# PASS = passou ✅
-# FAIL = falhou ❌
-# ERROR = erro na execução ⚠️
-
-# test_inserir_cliente: PASS
-# test_listar_clientes: PASS
-# test_atualizar_cliente: PASS
-# test_excluir_cliente: PASS

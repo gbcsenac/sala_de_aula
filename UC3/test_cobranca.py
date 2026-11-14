@@ -2,7 +2,7 @@
 from datetime import date
 from unittest.mock import Mock
 
-from UC3.cobranca import Emprestimo, CobradorDeAtrasos
+from cobranca import Emprestimo, CobradorDeAtrasos
 
 
 def test_emprestimo_atrasado_recebe_aviso():
@@ -191,4 +191,3 @@ def cobrar(self) -> None:
             emprestimo.registrar_aviso(hoje)
             self.repositorio.atualiza(emprestimo)
             self.total_avisados += 1
-
