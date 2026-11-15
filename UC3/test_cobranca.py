@@ -2,15 +2,19 @@
 from datetime import date
 from unittest.mock import Mock
 
-from cobranca import Emprestimo, CobradorDeAtrasos
-
+from UC3.cobranca import (
+    Emprestimo,
+    CobradorDeAtrasos,
+    RepositorioDeEmprestimos,
+    AvisadorPorWhatsApp
+)
 
 def test_emprestimo_atrasado_recebe_aviso():
 
     # Arrange: preparar os objetos dublês
-    repositorio = Mock()
-    avisador = Mock()
-    relogio = Mock()
+    repositorio = Mock(spec=RepositorioDeEmprestimos)
+    avisador = Mock(spec=AvisadorPorWhatsApp)
+    relogio = Mock(spec=["hoje"])
 
     hoje = date(2026, 11, 12)
 
@@ -40,9 +44,9 @@ def test_emprestimo_atrasado_recebe_aviso():
 def test_emprestimo_no_prazo_nao_recebe_aviso():
 
     # Arrange: preparar os objetos dublês
-    repositorio = Mock()
-    avisador = Mock()
-    relogio = Mock()
+    repositorio = Mock(spec=RepositorioDeEmprestimos)
+    avisador = Mock(spec=AvisadorPorWhatsApp)
+    relogio = Mock(spec=["hoje"])
 
     hoje = date(2026, 11, 12)
 
@@ -73,9 +77,9 @@ def test_emprestimo_no_prazo_nao_recebe_aviso():
 def test_dia_exato_do_prazo_nao_recebe_aviso():
 
     # Arrange
-    repositorio = Mock()
-    avisador = Mock()
-    relogio = Mock()
+    repositorio = Mock(spec=RepositorioDeEmprestimos)
+    avisador = Mock(spec=AvisadorPorWhatsApp)
+    relogio = Mock(spec=["hoje"])
 
     hoje = date(2026, 11, 12)
 
@@ -106,9 +110,9 @@ def test_dia_exato_do_prazo_nao_recebe_aviso():
 def test_fim_de_semana_nao_recebe_aviso():
 
     # Arrange
-    repositorio = Mock()
-    avisador = Mock()
-    relogio = Mock()
+    repositorio = Mock(spec=RepositorioDeEmprestimos)
+    avisador = Mock(spec=AvisadorPorWhatsApp)
+    relogio = Mock(spec=["hoje"])
 
     hoje = date(2026, 11, 14)  # Sábado
 
@@ -139,9 +143,9 @@ def test_fim_de_semana_nao_recebe_aviso():
 def test_whatsapp_fora_do_ar_nao_interrompe_cobranca():
 
     # Arrange
-    repositorio = Mock()
-    avisador = Mock()
-    relogio = Mock()
+    repositorio = Mock(spec=RepositorioDeEmprestimos)
+    avisador = Mock(spec=AvisadorPorWhatsApp)
+    relogio = Mock(spec=["hoje"])
 
     hoje = date(2026, 11, 12)
 
@@ -173,21 +177,36 @@ def test_whatsapp_fora_do_ar_nao_interrompe_cobranca():
     assert cobrador.total_avisados == 0
     repositorio.atualiza.assert_not_called()
 
-def cobrar(self) -> None:
-    hoje = self.relogio.hoje()
+def test_registra_aviso_depois_do_envio():
 
-    if hoje.weekday() >= 5:
-        return
+    # Arrange
+    repositorio = Mock(spec=RepositorioDeEmprestimos)
+    avisador = Mock(spec=AvisadorPorWhatsApp)
+    relogio = Mock(spec=["hoje"])
 
-    for emprestimo in self.repositorio.abertos():
-        if emprestimo.atrasado_em(hoje):
+    hoje = date(2026, 11, 12)
 
-            try:
-                self.avisador.avisa(emprestimo)
+    emprestimo = Emprestimo(
+        6,
+        "Mariana",
+        "51944444444",
+        date(2026, 11, 10)
+    )
 
-            except ConnectionError:
-                continue
+    repositorio.abertos.return_value = [emprestimo]
+    relogio.hoje.return_value = hoje
 
-            emprestimo.registrar_aviso(hoje)
-            self.repositorio.atualiza(emprestimo)
-            self.total_avisados += 1
+    cobrador = CobradorDeAtrasos(
+        repositorio,
+        avisador,
+        relogio
+    )
+
+    # Act
+    cobrador.cobrar()
+
+    # Assert
+    avisador.avisa.assert_called_once_with(emprestimo)
+    repositorio.atualiza.assert_called_once_with(emprestimo)
+    assert emprestimo.avisado_em == hoje
+    assert cobrador.total_avisados == 1

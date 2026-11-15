@@ -73,8 +73,8 @@ class RepositorioDeEmprestimos:
         # numa máquina sem o psycopg2 instalado.
         import psycopg2
         self.conexao = psycopg2.connect(
-            dbname="postgres",
-            user="postgres",
+            dbname="pavane_greyce",
+            user="postgres", 
             password="postgres",
             host="localhost",
             port="5432"
