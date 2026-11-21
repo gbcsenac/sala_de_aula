@@ -1,6 +1,5 @@
 
-from UC3.pavane_greyce.crud_produto import Produto
-
+from crud_produto import Produto
 
 def test_inserir_produto(conexao):
     produto = Produto(

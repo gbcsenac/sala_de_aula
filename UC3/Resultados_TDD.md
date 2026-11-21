@@ -367,3 +367,35 @@ UC3/pavane_greyce/test_produto.py::test_banco_recusa_preco_zero PASSED          
 # PostgreSQL rejeita preço igual a zero.
 # Restrição CHECK validada.
 # Banco utilizado: pavane_greyce_teste.
+
+===================================================== test session starts ======================================================
+platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula
+plugins: anyio-4.16.0, platformdirs-4.14.2
+collected 7 items                                                                                                               
+
+UC3/test_emprestimo.py::test_cliente_com_10_ainda_leva_3 PASSED                                                           [ 14%]
+UC3/test_emprestimo.py::test_cliente_com_11_leva_4 PASSED                                                                 [ 28%]
+UC3/test_emprestimo.py::test_cliente_com_10_ainda_leva_3_no_emprestimo PASSED                                             [ 42%]
+UC3/test_emprestimo.py::test_cliente_fiel_pode_levar_4_jogos PASSED                                                       [ 57%]
+UC3/test_emprestimo.py::test_cliente_fiel_nao_pode_levar_5_jogos PASSED                                                   [ 71%]
+UC3/test_emprestimo.py::test_nao_aceita_titulo_vazio PASSED                                                               [ 85%]
+UC3/test_emprestimo.py::test_nao_aceita_o_mesmo_jogo_duas_vezes FAILED                                                    [100%]
+
+=========================================================== FAILURES ===========================================================
+___________________________________________ test_nao_aceita_o_mesmo_jogo_duas_vezes ____________________________________________
+
+    def test_nao_aceita_o_mesmo_jogo_duas_vezes():
+        emprestimo = Emprestimo(Cliente("Ana", 0))
+    
+        emprestimo.adicionar("Zelda")
+    
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+UC3\test_emprestimo.py:81: Failed
+=================================================== short test summary info ====================================================
+FAILED UC3/test_emprestimo.py::test_nao_aceita_o_mesmo_jogo_duas_vezes - Failed: DID NOT RAISE ValueError
+================================================= 1 failed, 6 passed in 3.84s ==================================================

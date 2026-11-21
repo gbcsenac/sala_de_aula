@@ -1,8 +1,8 @@
 
 from unittest.mock import Mock
 
-from UC2.cliente import Cliente
-from UC3.regras_encomenda import ServicoEncomenda
+from cliente import Cliente
+from regras_encomenda import ServicoEncomenda
 
 
 def criar_servico_mock():

@@ -1,3 +1,5 @@
+from cliente import Cliente
+
 class ServicoEncomenda:
 
     def __init__(self, repositorio_clientes, repositorio_produtos):

@@ -1,6 +1,6 @@
 
 from unittest.mock import Mock, MagicMock
-from UC2.cliente import Cliente, RepositorioCliente
+from cliente import Cliente, RepositorioCliente
 
 
 def criar_repositorio_mock():

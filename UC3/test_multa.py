@@ -1,4 +1,4 @@
-from multa import multa, valor_do_aluguel
+from UC3.multa import multa, valor_do_aluguel
 import pytest
 
 # MULTA

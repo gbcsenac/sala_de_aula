@@ -1,4 +1,4 @@
-from regra import validar_preco
+from UC3.regra import validar_preco
 
 def test_preco_valido():
     assert validar_preco(10.0) == True

@@ -1,9 +1,8 @@
+from encomenda import Encomenda
 #Regra: não aceitar encomenda sem cliente
+
 from datetime import date
 import pytest
-
-from encomenda import Encomenda
-
 
 def test_aceita_encomenda_com_cliente():
     encomenda = Encomenda(
