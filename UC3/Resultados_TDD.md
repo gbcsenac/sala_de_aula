@@ -449,3 +449,95 @@ PG Personalizados\tests\test_regras_encomenda.py::test_estoque_insuficiente_impe
 PG Personalizados\tests\test_regras_encomenda.py::test_produto_nao_encontrado_impede_encomenda PASSED                     [100%]
 
 ====================================================== 5 passed in 0.86s =======================================================
+
+===================================================== test session starts ======================================================
+platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula
+plugins: anyio-4.16.0, platformdirs-4.14.2
+collected 33 items                                                                                                              
+
+UC3/locadora_demo/test_crud_jogo.py::test_cria_e_busca_pelo_id PASSED                                                     [  3%]
+UC3/locadora_demo/test_crud_jogo.py::test_busca_jogo_pelo_titulo PASSED                                                   [  6%]
+UC3/locadora_demo/test_crud_jogo.py::test_apaga_jogo PASSED                                                               [  9%]
+UC3/locadora_demo/test_crud_jogo.py::test_deleta_jogo_com_plataforma FAILED                                               [ 12%]
+UC3/locadora_demo/test_crud_jogo.py::test_banco_recusa_preco_negativo PASSED                                              [ 15%]
+UC3/locadora_demo/test_crud_jogo.py::test_banco_recusa_titulo_repetido PASSED                                             [ 18%]
+UC3/test_cobranca.py::test_emprestimo_atrasado_recebe_aviso PASSED                                                        [ 21%]
+UC3/test_cobranca.py::test_emprestimo_no_prazo_nao_recebe_aviso PASSED                                                    [ 24%]
+UC3/test_cobranca.py::test_dia_exato_do_prazo_nao_recebe_aviso PASSED                                                     [ 27%]
+UC3/test_cobranca.py::test_fim_de_semana_nao_recebe_aviso PASSED                                                          [ 30%]
+UC3/test_cobranca.py::test_whatsapp_fora_do_ar_nao_interrompe_cobranca PASSED                                             [ 33%]
+UC3/test_cobranca.py::test_registra_aviso_depois_do_envio PASSED                                                          [ 36%]
+UC3/test_cobranca.py::test_falha_no_whatsapp_nao_impede_cobrar_proximo_cliente PASSED                                     [ 39%]
+UC3/test_emprestimo.py::test_cliente_com_10_ainda_leva_3 PASSED                                                           [ 42%]
+UC3/test_emprestimo.py::test_cliente_com_11_leva_4 PASSED                                                                 [ 45%]
+UC3/test_emprestimo.py::test_cliente_com_10_ainda_leva_3_no_emprestimo PASSED                                             [ 48%]
+UC3/test_emprestimo.py::test_cliente_fiel_pode_levar_4_jogos PASSED                                                       [ 51%]
+UC3/test_emprestimo.py::test_cliente_fiel_nao_pode_levar_5_jogos PASSED                                                   [ 54%]
+UC3/test_emprestimo.py::test_nao_aceita_titulo_vazio PASSED                                                               [ 57%]
+UC3/test_emprestimo.py::test_nao_aceita_o_mesmo_jogo_duas_vezes PASSED                                                    [ 60%]
+UC3/test_multa.py::test_antes_da_fronteira PASSED                                                                         [ 63%]
+UC3/test_multa.py::test_na_fronteira_dos_dois_dias PASSED                                                                 [ 66%]
+UC3/test_multa.py::test_depois_da_fronteira_dos_tres_dias PASSED                                                          [ 69%]
+UC3/test_multa.py::test_depois_da_fronteira_dos_quatro_dias PASSED                                                        [ 72%]
+UC3/test_multa.py::test_aluguel_por_um_dia PASSED                                                                         [ 75%]
+UC3/test_multa.py::test_aluguel_por_dois_dias PASSED                                                                      [ 78%]
+UC3/test_multa.py::test_nao_aceita_aluguel_com_zero_dias PASSED                                                           [ 81%]
+UC3/test_multa.py::test_nao_aceita_aluguel_com_dias_negativos PASSED                                                      [ 84%]
+UC3/test_regra.py::test_preco_valido PASSED                                                                               [ 87%]
+UC3/test_regra.py::test_preco_valido_com_centavos PASSED                                                                  [ 90%]
+UC3/test_regra.py::test_preco_zero PASSED                                                                                 [ 93%]
+UC3/test_regra.py::test_preco_negativo PASSED                                                                             [ 96%]
+UC3/test_regra.py::test_preco_negativo_com_centavos PASSED                                                                [100%]
+
+=========================================================== FAILURES ===========================================================
+_______________________________________________ test_deleta_jogo_com_plataforma ________________________________________________
+
+conexao = <connection object at 0x000001B56675A8A0; dsn: 'user=postgres password=xxx dbname=locadora_teste host=localhost port=5432', closed: 0>
+
+    def test_deleta_jogo_com_plataforma(conexao):
+        criado = criar_jogo(conexao, "Zelda", "Aventura", 2017, "8.00")
+    
+        cursor = conexao.cursor()
+        cursor.execute(
+            "INSERT INTO plataforma (nome) VALUES ('Switch') RETURNING id_plataforma"
+        )
+        id_plataforma = cursor.fetchone()[0]
+    
+        cursor.execute(
+            "INSERT INTO jogos_plataforma (id_jogo, id_plataforma) VALUES (%s, %s)",
+            (criado.id_jogo, id_plataforma)
+        )
+        conexao.commit()
+    
+>       assert deletar_jogo(conexao, criado.id_jogo) is True
+E       AssertionError: assert False is True
+E        +  where False = deletar_jogo(<connection object at 0x000001B56675A8A0; dsn: 'user=postgres password=xxx dbname=locadora_teste host=localhost port=5432', closed: 0>, 1)
+E        +    where 1 = Jogo( 1 - Zelda ).id_jogo
+
+UC3\locadora_demo\test_crud_jogo.py:42: AssertionError
+----------------------------------------------------- Captured stdout call -----------------------------------------------------
+ERRO:  atualização ou exclusão em tabela "jogo" viola restrição de chave estrangeira "jogos_plataforma_id_jogo_fkey" em "jogos_plataforma"
+DETAIL:  Chave (id_jogo)=(1) ainda é referenciada pela tabela "jogos_plataforma".
+
+=================================================== short test summary info ====================================================
+FAILED UC3/locadora_demo/test_crud_jogo.py::test_deleta_jogo_com_plataforma - AssertionError: assert False is True
+================================================= 1 failed, 32 passed in 9.70s =================================================
+
+===================================================== test session starts ======================================================
+platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula\PG Personalizados
+configfile: pyproject.toml
+plugins: anyio-4.16.0, platformdirs-4.14.2
+collected 6 items                                                                                                               
+
+PG Personalizados\tests\test_produto.py::test_inserir_produto PASSED                                                      [ 16%]
+PG Personalizados\tests\test_produto.py::test_listar_produtos PASSED                                                      [ 33%]
+PG Personalizados\tests\test_produto.py::test_atualizar_produto PASSED                                                    [ 50%]
+PG Personalizados\tests\test_produto.py::test_excluir_produto PASSED                                                      [ 66%]
+PG Personalizados\tests\test_produto.py::test_banco_recusa_preco_zero PASSED                                              [ 83%]
+PG Personalizados\tests\test_produto.py::test_banco_impede_excluir_produto_vinculado_a_encomenda PASSED                   [100%]
+
+====================================================== 6 passed in 5.28s =======================================================
