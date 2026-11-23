@@ -210,3 +210,53 @@ def test_registra_aviso_depois_do_envio():
     repositorio.atualiza.assert_called_once_with(emprestimo)
     assert emprestimo.avisado_em == hoje
     assert cobrador.total_avisados == 1
+
+
+def test_falha_no_whatsapp_nao_impede_cobrar_proximo_cliente():
+
+    # Arrange
+    repositorio = Mock(spec=RepositorioDeEmprestimos)
+    avisador = Mock(spec=AvisadorPorWhatsApp)
+    relogio = Mock(spec=["hoje"])
+
+    hoje = date(2026, 11, 12)
+
+    maria = Emprestimo(
+        7,
+        "Maria",
+        "51999999999",
+        date(2026, 11, 10)
+    )
+
+    joao = Emprestimo(
+        8,
+        "João",
+        "51988888888",
+        date(2026, 11, 10)
+    )
+
+    repositorio.abertos.return_value = [maria, joao]
+    relogio.hoje.return_value = hoje
+
+    avisador.avisa.side_effect = [
+        ConnectionError("WhatsApp indisponível"),
+        None
+    ]
+
+    cobrador = CobradorDeAtrasos(
+        repositorio,
+        avisador,
+        relogio
+    )
+
+    # Act
+    cobrador.cobrar()
+
+    # Assert
+    assert avisador.avisa.call_count == 2
+    assert cobrador.total_avisados == 1
+
+    assert maria.avisado_em is None
+    assert joao.avisado_em == hoje
+
+    repositorio.atualiza.assert_called_once_with(joao)

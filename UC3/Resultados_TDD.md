@@ -352,7 +352,8 @@ platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Greyce B
 cachedir: .pytest_cache
 rootdir: C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula
 plugins: platformdirs-4.14.2
-collected 5 items                                                                                                               
+collected 
+5 items
 
 UC3/pavane_greyce/test_produto.py::test_inserir_produto PASSED                                                            [ 20%]
 UC3/pavane_greyce/test_produto.py::test_listar_produtos PASSED                                                            [ 40%]
@@ -373,7 +374,7 @@ platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Greyce B
 cachedir: .pytest_cache
 rootdir: C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula
 plugins: anyio-4.16.0, platformdirs-4.14.2
-collected 7 items                                                                                                               
+collected 7 items 
 
 UC3/test_emprestimo.py::test_cliente_com_10_ainda_leva_3 PASSED                                                           [ 14%]
 UC3/test_emprestimo.py::test_cliente_com_11_leva_4 PASSED                                                                 [ 28%]
@@ -399,3 +400,52 @@ UC3\test_emprestimo.py:81: Failed
 =================================================== short test summary info ====================================================
 FAILED UC3/test_emprestimo.py::test_nao_aceita_o_mesmo_jogo_duas_vezes - Failed: DID NOT RAISE ValueError
 ================================================= 1 failed, 6 passed in 3.84s ==================================================
+
+================================================= test session starts =================================================
+platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula
+plugins: anyio-4.16.0, platformdirs-4.14.2
+collected 7 items
+
+UC3/test_emprestimo.py::test_cliente_com_10_ainda_leva_3 PASSED                                                  [ 14%]
+UC3/test_emprestimo.py::test_cliente_com_11_leva_4 PASSED                                                        [ 28%]
+UC3/test_emprestimo.py::test_cliente_com_10_ainda_leva_3_no_emprestimo PASSED                                    [ 42%]
+UC3/test_emprestimo.py::test_cliente_fiel_pode_levar_4_jogos PASSED                                              [ 57%]
+UC3/test_emprestimo.py::test_cliente_fiel_nao_pode_levar_5_jogos PASSED                                          [ 71%]
+UC3/test_emprestimo.py::test_nao_aceita_titulo_vazio PASSED                                                      [ 85%]
+UC3/test_emprestimo.py::test_nao_aceita_o_mesmo_jogo_duas_vezes PASSED                                           [100%]
+
+================================================== 7 passed in 1.10s ==================================================
+
+===================================================== test session starts ======================================================
+platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula
+plugins: anyio-4.16.0, platformdirs-4.14.2
+collected 7 items
+
+UC3/test_cobranca.py::test_emprestimo_atrasado_recebe_aviso PASSED                                                        [ 14%]
+UC3/test_cobranca.py::test_emprestimo_no_prazo_nao_recebe_aviso PASSED                                                    [ 28%]
+UC3/test_cobranca.py::test_dia_exato_do_prazo_nao_recebe_aviso PASSED                                                     [ 42%]
+UC3/test_cobranca.py::test_fim_de_semana_nao_recebe_aviso PASSED                                                          [ 57%]
+UC3/test_cobranca.py::test_whatsapp_fora_do_ar_nao_interrompe_cobranca PASSED                                             [ 71%]
+UC3/test_cobranca.py::test_registra_aviso_depois_do_envio PASSED                                                          [ 85%]
+UC3/test_cobranca.py::test_falha_no_whatsapp_nao_impede_cobrar_proximo_cliente PASSED                                     [100%]
+
+====================================================== 7 passed in 1.14s =======================================================
+===================================================== test session starts ======================================================
+platform win32 -- Python 3.14.7, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Greyce Barcelos\OneDrive\Documents\sala_de_aula\PG Personalizados
+configfile: pyproject.toml
+plugins: anyio-4.16.0, platformdirs-4.14.2
+collected 5 items
+
+PG Personalizados\tests\test_regras_encomenda.py::test_cliente_cadastrado_permite_encomenda PASSED                        [ 20%]
+PG Personalizados\tests\test_regras_encomenda.py::test_cliente_nao_cadastrado_impede_encomenda PASSED                     [ 40%]
+PG Personalizados\tests\test_regras_encomenda.py::test_estoque_suficiente_permite_encomenda PASSED                        [ 60%]
+PG Personalizados\tests\test_regras_encomenda.py::test_estoque_insuficiente_impede_encomenda PASSED                       [ 80%]
+PG Personalizados\tests\test_regras_encomenda.py::test_produto_nao_encontrado_impede_encomenda PASSED                     [100%]
+
+====================================================== 5 passed in 0.86s =======================================================

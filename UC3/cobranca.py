@@ -14,9 +14,7 @@ CobradorDeAtrasos cria sozinho tudo de que precisa:
 Nenhum teste consegue entregar a ele um cenário pronto. É esse o problema
 da aula, e são vocês que vão mudar este arquivo até ele ficar testável.
 """
-
 from datetime import date
-
 
 class Emprestimo:
     id_emprestimo: int

@@ -6,31 +6,37 @@ Testing do VS Code só encontra arquivo cujo nome começa com test_, e é
 por estar na mesma pasta que o "from emprestimo import ..." funciona.
 """
 
+"""Empréstimo do balcão da locadora — UC3."""
+
 
 class Cliente:
-    """Quem leva os jogos.
+    """Representa um cliente da locadora."""
 
-    O número de empréstimos anteriores mora no cadastro da locadora, no
-    banco da UC2. Hoje ele entra digitado, à mão: testar com o banco no
-    meio é assunto das Aulas 04 e 05.
-    """
-
-    def __init__(self, nome, emprestimos_anteriores=0):
+    def __init__(self, nome, total_emprestimos=0):
         self.nome = nome
-        self.emprestimos_anteriores = emprestimos_anteriores
+        self.total_emprestimos = total_emprestimos
+
+    def limite_de_jogos(self):
+        if self.total_emprestimos > 10:
+            return 4
+        return 3
 
 
 class Emprestimo:
-    """Um empréstimo: um cliente, um ou mais jogos.
-
-    Segue as tabelas da UC2: o cliente fica no emprestimo, e cada jogo é
-    uma linha de item_emprestimo. Por isso o cliente entra quando o
-    empréstimo é criado, e não a cada jogo adicionado.
-    """
+    """Representa um empréstimo de jogos."""
 
     def __init__(self, cliente):
         self.cliente = cliente
         self.jogos = []
 
     def adicionar(self, jogo):
+        if not jogo.strip():
+            raise ValueError("Título não pode ser vazio")
+
+        if jogo in self.jogos:
+            raise ValueError("Jogo já adicionado")
+
+        if len(self.jogos) >= self.cliente.limite_de_jogos():
+            raise ValueError("Limite de jogos atingido")
+
         self.jogos.append(jogo)

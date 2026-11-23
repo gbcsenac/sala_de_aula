@@ -84,3 +84,15 @@ def test_estoque_insuficiente_impede_encomenda():
 
     assert resultado is False
 
+def test_produto_nao_encontrado_impede_encomenda():
+
+    servico, repositorio_clientes, repositorio_produtos = criar_servico_mock()
+
+    repositorio_produtos.buscar_produto.return_value = None
+
+    resultado = servico.estoque_disponivel(99, 2)
+
+    repositorio_produtos.buscar_produto.assert_called_once_with(99)
+
+    assert resultado is False
+
