@@ -1,0 +1,7 @@
+# a senha desta máquina
+.env
+
+# o que o Python e o pytest geram sozinhos
+__pycache__/
+.pytest_cache/
+.venv/

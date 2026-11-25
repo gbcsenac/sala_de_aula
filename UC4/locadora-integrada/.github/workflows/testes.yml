@@ -1,0 +1,19 @@
+# testes.yml — o GitHub roda os testes de regra a cada push.
+#
+# Integração contínua, na forma mais curta: máquina limpa, instala o que o
+# requirements.txt pede, roda o pytest. Se alguém mandar código que quebra uma
+# regra, o commit aparece com um X vermelho no GitHub — sem ninguém lembrar de
+# rodar nada. Só as regras: os testes de dados precisariam de um PostgreSQL
+# dentro do GitHub, que é o próximo passo, e não o primeiro.
+name: testes
+on: push
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: pytest tests/test_regras.py

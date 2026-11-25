@@ -1,0 +1,8 @@
+# As bibliotecas, com a versão em que o projeto foi testado.
+# Instalar: numa célula de notebook, %pip install -r requirements.txt
+matplotlib==3.11.2
+peewee==4.5.3
+psycopg2-binary==2.9.13
+pytest==9.2.0
+python-dotenv==1.2.4
+rich==15.0.0

@@ -1,0 +1,10 @@
+# pyproject.toml — por enquanto, só a configuração do pytest.
+#
+# pythonpath = ["."] põe a raiz do projeto no caminho de importação: sem isso,
+# o teste dentro de tests/ não acha o pacote locadora/ e falha com
+# ModuleNotFoundError antes de testar qualquer coisa (medido com o executável
+# pytest; o "python -m pytest" esconde o problema, porque já põe a pasta atual
+# no caminho).
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
